@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hotel Booking{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'images/yoyo.jpg' %}" alt="YoYo Hotels Logo" class="logo-img">
+            </a>
+            <ul>
+                <li><a href="{% url 'home' %}" class="logo">Home</a></li>
+                <li><a href="{% url 'hotel_list' %}">Book Hotels</a></li>
+                <li><a href="#">Book Food</a></li>
+            </ul>
+            {% if user.is_authenticated %}
+                <a href="{% url 'my_bookings' %}" style="text-decoration: none; color: #000000;">My Bookings</a>
+            {% endif %}
+        </div>
+        
+        <div class="nav-right">
+            {% if request.user.is_authenticated %}
+                <h4>Welcome {{ user.username }}</h4>
+                <a href="{% url 'logout' %}" class="auth-btn">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="auth-btn">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+     
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    {% comment %} <script src="{% static 'js/scripts.js' %}"></script> {% endcomment %}
+    <footer>
+        <p>&copy; {% now "DATE_FORMAT" %} YoYo Booking. All rights reserved.</p>
+        {% comment %} <a href="{% url 'terms_and_conditions' %}" style="text-decoration: none; color: white;">Terms and Conditions</a> {% endcomment %}
+    </footer>
+</body>
+</html>

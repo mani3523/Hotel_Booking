@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ hotel.name }} - Details{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hotel_detail.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="hotel-details">
+        <h2>{{ hotel.name }}</h2>
+        <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}" class="hotel-image">
+        <p><strong>Location:</strong> {{ hotel.location }}</p>
+        <p>{{ hotel.description }}</p>
+    </div>
+
+    <h3 class="room-heading">Available Rooms</h3>
+    <div class="room-list">
+        {% for room in rooms %}
+            <div class="room-card">
+                <img src="{{ room.image.url }}" alt="{{ room.room_type }}" class="room-image">
+                <p><strong>Type:</strong> {{ room.room_type }}</p>
+                <p><strong>Price:</strong> ₹{{ room.price_per_night }} per night</p>
+                <p><strong>Status:</strong> {% if room.is_available %} Available {% else %} Booked {% endif %}</p>
+
+                {% if room.is_available %}
+                    <a href="{% url 'book_room' room.id %}" class="btn btn-primary">Book Now</a>
+                {% else %}
+                    <button class="btn btn-secondary" disabled>Booked</button>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p class="no-rooms">No available rooms.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

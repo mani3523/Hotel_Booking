@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}My Bookings{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 style="text-align: center;">My Bookings</h2>
+
+    {% if bookings %}
+        <table class="booking-table">
+            <thead>
+                <tr>
+                    <th>Hotel</th>
+                    <th>Room Type</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.room.hotel.name }}</td>
+                    <td>{{ booking.room.room_type }}</td>
+                    <td>{{ booking.check_in }}</td>
+                    <td>{{ booking.check_out }}</td>
+                    <td>₹{{ booking.total_price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="text-align: center;">You have no bookings yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

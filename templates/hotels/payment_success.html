@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/payment_success.css' %}">
+{% endblock %}
+{% block content %}
+<div class="payment-success">
+    <h2>Payment Successful! 🎉</h2>
+    <p>Thank you for your payment, {{ payment.user.username }}.</p>
+    
+    <h3>Booking Details</h3>
+    <p><strong>Hotel:</strong> {{ payment.booking.room.hotel.name }}</p>
+    <p><strong>Room Type:</strong> {{ payment.booking.room.room_type }}</p>
+    <p><strong>Check-in:</strong> {{ payment.booking.check_in }}</p>
+    <p><strong>Check-out:</strong> {{ payment.booking.check_out }}</p>
+    <p><strong>Total Amount Paid:</strong> ₹{{ payment.amount }}</p>
+
+    <p>Your booking has been confirmed. You will receive an email confirmation shortly.</p>
+
+    <a href="{% url 'home' %}" class="btn">Back to Home</a>
+</div>
+{% endblock %}

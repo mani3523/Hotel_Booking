@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Hotel List{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hotel_list.css' %}">
+{% endblock %}
+{% block content %}
+    <h2 style="text-align: center;">Available Hotels</h2>
+    <div class="hotel-list">
+        {% for hotel in hotels %}
+            <div class="hotel-card">
+                <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}" class="hotel-image">
+                <h3><a href="{% url 'hotel_detail' hotel.id %}">{{ hotel.name }}</a></h3>
+                <p>{{ hotel.location }}</p>
+                <p>{{ hotel.description|truncatewords:20 }}</p>
+            </div>
+        {% empty %}
+            <p>No hotels available.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/book_room.css' %}">
+{% endblock %}
+{% block content %}
+
+<div class="booking-container">
+    <h2>Room Booking</h2>
+
+    <p><strong>Hotel:</strong> {{ room.hotel.name }}</p>
+    <p><strong>Room Type:</strong> {{ room.room_type }}</p>
+    <p><strong>Price per Night:</strong> ₹{{ room.price_per_night }}</p>
+
+    <form action="{% url 'book_room' room.id %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Confirm Booking</button>
+    </form>
+
+    {% if booking %}
+        <a href="{% url 'initiate_payment' booking.id %}" class="btn btn-primary">Buy Now</a>
+    {% endif %}
+</div>
+{% endblock %}

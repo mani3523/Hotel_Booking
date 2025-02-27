@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/payment.css' %}">
+{% endblock %}
+{% block content %}
+<div class="payment-container">
+    <h2>Confirm Payment</h2>
+    <p>Total Amount: ₹{{ amount }}</p>
+
+    <!-- Razorpay Payment Button -->
+    <form action="{% url 'payment_success' %}" method="POST">
+        {% csrf_token %}
+        <script src="https://checkout.razorpay.com/v1/checkout.js"
+            data-key="{{ razorpay_key }}"
+            data-amount="{{ amount }}"
+            data-currency="INR"
+            data-order_id="{{ razorpay_order_id }}"
+            data-buttontext="Pay Now"
+            data-name="Hotel Booking"
+            data-description="Secure payment for hotel room"
+            data-theme.color="#F37254">
+        </script>
+    </form>
+</div>
+{% endblock %}

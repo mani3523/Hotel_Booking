@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <header class="hero">
+        <h1>Welcome to Hotel Booking</h1>
+        <p>Find the best hotels and book your stay with ease.</p>
+        <a href="{% url 'hotel_list' %}" class="btn">Explore Hotels</a>
+    </header>
+
+    <section class="featured-hotels">
+        <h2>Featured Hotels</h2>
+        <div class="hotel-list">
+            {% for hotel in hotels %}
+                <div class="hotel-card">
+                    <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}" class="hotel-image">
+                    <h3><a href="{% url 'hotel_detail' hotel.id %}" style="text-decoration: none; color: blue;">{{ hotel.name }}</a></h3>
+                    <p>{{ hotel.location }}</p>
+                </div>
+            {% empty %}
+                <p>No hotels available.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
