@@ -1,0 +1,58 @@
+/* Styling for the checkout container */
+.checkout-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Order summary styling */
+.order-summary {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Total amount styling */
+.amount {
+    font-size: 20px;
+    font-weight: bold;
+    color: #27ae60;
+    margin-bottom: 20px;
+}
+
+/* Pay Now button styling */
+.razorpay-payment-button {
+    background-color: #27ae60 !important;
+    color: #fff !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    padding: 12px 20px !important;
+    border-radius: 5px !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: background 0.3s ease !important;
+}
+
+.razorpay-payment-button:hover {
+    background-color: #219150 !important;
+}
+
+/* Back to Menu button styling */
+.back-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #fff;
+    background: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.back-btn:hover {
+    background: #555;
+}

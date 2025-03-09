@@ -51,8 +51,8 @@ INSTALLED_APPS = [
     # Custom Apps
     'users',
     'hotels',
-    'food',
-    
+    'restaurant',
+
     
 ]
 SITE_ID = 1
@@ -181,9 +181,11 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+
+LOGIN_URL = "/users/login/"
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_VERIFICATION = "none"  # Optional, disable email verification
 ACCOUNT_EMAIL_VERIFICATION = "none"
-ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_EMAIL_REQUIRED = True

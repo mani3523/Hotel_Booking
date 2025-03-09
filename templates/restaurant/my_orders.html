@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Food Orders{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/my_orders.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="orders-container">
+    <h2>My Food Orders</h2>
+    
+    {% if orders %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Food Item</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Order Date</th>
+                    <th>Payment Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.food_item.name }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>₹{{ order.total_price }}</td>
+                    <td>{{ order.created_at|date:"d M Y, H:i" }}</td>
+                    <td>{{ order.payment_status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No orders found.</p>
+    {% endif %}
+</div>
+{% endblock %}

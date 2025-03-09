@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Add Food Item{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/food_items.css' %}">
+{% endblock %}
+{% block content %}
+<h2>Add Food Item to {{ restaurant.name }}</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Add Food Item</button>
+</form>
+
+<a href="{% url 'restaurant_detail' restaurant.id %}">Back to Restaurant</a>
+{% endblock %}

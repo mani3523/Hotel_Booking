@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Restaurant List{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/restaurant_list.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h2 style="text-align: center;">Available Restaurants</h2>
+    <div class="restaurant-list">
+        {% for restaurant in restaurants %}
+            <div class="restaurant-card">
+                {% if restaurant.image %}
+                    <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}" class="restaurant-image">
+                {% else %}
+                    <p>No Image Available</p>
+                {% endif %}
+                <h3><a href="{% url 'restaurant_detail' restaurant.id %}" style="text-decoration: none;">{{ restaurant.name }}</a></h3>
+                <p>{{ restaurant.location }}</p>
+                <p>{{ restaurant.description|truncatewords:20 }}</p>
+            </div>
+        {% empty %}
+            <p>No restaurants available.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ restaurant.name }} - Details{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/restaurant_detail.css' %}">
+{% endblock %}
+{% block content %}
+<h2 style="text-align: center;">{{ restaurant.name }}</h2>
+<div class="food-menu">
+    {% for food in restaurant.food_items.all %}
+        <div class="food-card">
+            <img src="{{ food.image.url }}" alt="{{ food.name }}" class="food-image">
+            <h4>{{ food.name }}</h4>
+            <p>{{ food.description }}</p>
+            <p><strong>Price:</strong> ₹{{ food.price }}</p>
+            <a href="{% url 'order_food' food.id %}" class="btn btn-success">Order now</a>
+        </div>
+    {% empty %}
+        <p>No food items available.</p>
+    {% endfor %}
+    
+</div>
+
+
+{% endblock %}

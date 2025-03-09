@@ -1,0 +1,38 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+    {% endblock %}
+</head>
+<body>
+
+<div class="checkout-container">
+    <h2>Checkout</h2>
+    <p class="order-summary">You are ordering: <strong>{{ order.food_item.name }}</strong></p>
+    <p class="amount">Total Amount: ₹{{ amount }}</p>
+
+    <!-- Razorpay Payment Button -->
+    <form action="{% url 'order_success' %}" method="POST">
+        <script src="https://checkout.razorpay.com/v1/checkout.js"
+                data-key="{{ razorpay_key }}"
+                data-amount="{{ razorpay_amount }}"
+                data-currency="INR"
+                data-order_id="{{ razorpay_order_id }}"
+                data-buttontext="Pay Now"
+                data-name="Food Order"
+                data-description="Secure Payment"
+                data-theme.color="#27ae60">
+        </script>
+        <input type="hidden" name="order_id" value="{{ order.id }}">
+    </form>
+
+    <a href="{% url 'restaurant_detail' order.food_item.restaurant.id %}" class="back-btn">Back to Menu</a>
+</div>
+
+</body>
+</html>

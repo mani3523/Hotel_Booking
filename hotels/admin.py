@@ -46,7 +46,15 @@ class RoomAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('user', 'room', 'check_in', 'check_out', 'total_price')
+    list_display = ('user', 'get_room_type', 'get_hotel', 'check_in', 'check_out', 'total_price')
     list_filter = ('room__hotel', 'check_in')
     search_fields = ('user__username', 'room__hotel__name')
     readonly_fields = ('total_price',)
+
+    def get_room_type(self, obj):
+        return obj.room.room_type
+    get_room_type.short_description = "Room Type"
+
+    def get_hotel(self, obj):
+        return obj.room.hotel.name
+    get_hotel.short_description = "Hotel"
