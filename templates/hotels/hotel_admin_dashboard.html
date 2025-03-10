@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Hotel Admin Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Welcome, {{ request.user.username }}</h2>
+    <h3>Managing Hotel: {{ hotel.name }}</h3>
+    <p>Location: {{ hotel.location }}</p>
+
+    <h3>Room Bookings</h3>
+    <table border="1">
+        <tr>
+            <th>Customer Name</th>
+            <th>Room Number</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+        </tr>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.customer_name }}</td>
+            <td>{{ booking.room_number }}</td>
+            <td>{{ booking.booking_date }}</td>
+            <td>{{ booking.status }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No bookings yet.</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

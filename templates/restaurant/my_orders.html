@@ -15,6 +15,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Restaurant Name</th>
                     <th>Food Item</th>
                     <th>Quantity</th>
                     <th>Total Price</th>
@@ -25,6 +26,7 @@
             <tbody>
                 {% for order in orders %}
                 <tr>
+                    <td>{{ order.food_item.restaurant.name }}</td> 
                     <td>{{ order.food_item.name }}</td>
                     <td>{{ order.quantity }}</td>
                     <td>₹{{ order.total_price }}</td>

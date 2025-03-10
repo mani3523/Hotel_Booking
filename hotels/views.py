@@ -1,54 +1,53 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import *
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
-from .forms import BookingForm
+from django.http import HttpResponseForbidden, JsonResponse
 from django.contrib import messages
 from django.conf import settings
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 import razorpay
+from django.views.decorators.csrf import csrf_exempt
+
+from .models import *
+from .forms import BookingForm
+from .utils import is_hotel_admin
 
 razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_API_KEY, settings.RAZORPAY_SECRET_KEY))
 
 
-# Create your views
+# Home Page
 def home(request):
-    hotels = Hotel.objects.all()[:3]  # Show only 6 hotels on the home page
+    hotels = Hotel.objects.all()[:3]  # Show only 3 hotels on the home page
     return render(request, 'home.html', {'hotels': hotels})
+
+
 # List all hotels
 @login_required(login_url='login')
 def hotel_list(request):
     hotels = Hotel.objects.all()
     return render(request, 'hotels/hotel_list.html', {'hotels': hotels})
 
-# Show details of a single hotel and its available rooms
+
+# Show hotel details with available rooms
 @login_required(login_url='login')
 def hotel_detail(request, hotel_id):
     hotel = get_object_or_404(Hotel, id=hotel_id)
-    rooms = Room.objects.filter(hotel=hotel, is_available=True)  # Fetch rooms only for this hotel
+    rooms = Room.objects.filter(hotel=hotel, is_available=True)
     return render(request, 'hotels/hotel_detail.html', {'hotel': hotel, 'rooms': rooms})
 
+
+# Book a Room
 @login_required(login_url='login')
 def book_room(request, room_id):
     room = get_object_or_404(Room, id=room_id)
-
-    # Ensure only the selected hotel's rooms are shown
-    hotel_rooms = Room.objects.filter(hotel=room.hotel, is_available=True)
-
-    if room not in hotel_rooms:
-        messages.error(request, "Invalid room selection.")
-        return redirect('hotel_detail', hotel_id=room.hotel.id)
 
     if request.method == "POST":
         form = BookingForm(request.POST)
         if form.is_valid():
             booking = form.save(commit=False)
             booking.user = request.user
-            booking.room = room  # Assign the room manually
+            booking.room = room
 
-            # Ensure room availability for the selected dates
+            # Check room availability
             existing_bookings = Booking.objects.filter(
                 room=room,
                 check_in__lt=booking.check_out,
@@ -67,9 +66,10 @@ def book_room(request, room_id):
 
     return render(request, 'hotels/book_room.html', {'form': form, 'room': room})
 
+
 @login_required
 def my_bookings(request):
-    bookings = Booking.objects.filter(user=request.user).order_by('-created_at')
+    bookings = Booking.objects.filter(user=request.user).select_related('room', 'room__hotel')
     return render(request, 'hotels/my_bookings.html', {'bookings': bookings})
 
 
@@ -83,14 +83,12 @@ def initiate_payment(request, booking_id):
 
     amount = int(booking.total_price * 100)  # Convert to paise
 
-    # Create order in Razorpay
     razorpay_order = razorpay_client.order.create({
         "amount": amount,
         "currency": "INR",
         "payment_capture": "1"
     })
 
-    # Save order details
     payment = Payment.objects.create(
         user=request.user,
         booking=booking,
@@ -104,7 +102,8 @@ def initiate_payment(request, booking_id):
         "amount": booking.total_price,
         "booking": booking
     })
-    
+
+
 @csrf_exempt
 def payment_success(request):
     if request.method == "POST":
@@ -127,10 +126,17 @@ def payment_success(request):
 
     return redirect("home")
 
+
 @login_required
-def my_bookings(request):
-    bookings = Booking.objects.filter(user=request.user).select_related('room', 'room__hotel')
-    return render(request, 'hotels/my_bookings.html', {'bookings': bookings})
+def hotel_admin_dashboard(request, hotel_id):
+    hotel = get_object_or_404(Hotel, id=hotel_id)
+
+    if not is_hotel_admin(request.user, hotel) and not request.user.is_superuser:
+        return HttpResponseForbidden("You are not authorized to access this page.")
+
+    return render(request, 'hotels/hotel_admin_dashboard.html', {'hotel': hotel})
+
+
 
 def terms_and_conditions(request):
     return render(request, 'hotels/terms_and_conditions.html')

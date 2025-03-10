@@ -9,5 +9,6 @@ urlpatterns = [
     path('my_bookings/', my_bookings, name='my_bookings'),
     path("initiate_payment/<int:booking_id>/", initiate_payment, name="initiate_payment"),
     path("payment_success/", payment_success, name="payment_success"),
-    path('terms_and_conditions/', terms_and_conditions, name='terms_and_conditions'),    
+    path('terms_and_conditions/', terms_and_conditions, name='terms_and_conditions'), 
+    path('hotel_admin/', hotel_admin_dashboard, name='hotel_admin_dashboard'),   
 ]
