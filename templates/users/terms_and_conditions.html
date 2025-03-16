@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Terms and Conditions{% endblock %}
+
+{% block content %}
+<style>
+    /* General container styling */
+    .container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        font-family: 'Arial', sans-serif;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    /* Heading styles */
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+    
+    h3 {
+        font-size: 22px;
+        color: #27ae60;
+        margin-top: 20px;
+    }
+    
+    /* Paragraph styles */
+    p {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 15px;
+    }
+    
+    /* Links */
+    a {
+        color: #2980b9;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    a:hover {
+        text-decoration: underline;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .container {
+            width: 90%;
+            padding: 20px;
+        }
+    
+        h2 {
+            font-size: 24px;
+        }
+    
+        h3 {
+            font-size: 20px;
+        }
+    
+        p {
+            font-size: 14px;
+        }
+    }
+
+</style>
+<div class="container">
+    <h2>Terms and Conditions</h2>
+    <p>Welcome to our hotel booking platform! By using our website, you agree to the following terms and conditions:</p>
+
+    <h3>1. Booking Policy</h3>
+    <p>All bookings are subject to availability. A confirmation email will be sent upon successful booking.</p>
+
+    <h3>2. Cancellation Policy</h3>
+    <p>Bookings can be canceled up to 24 hours before check-in. Refunds are processed according to our refund policy.</p>
+
+    <h3>3. User Responsibilities</h3>
+    <p>Users must provide accurate information during the booking process. Any fraudulent activity will result in account suspension.</p>
+
+    <h3>4. Payment Terms</h3>
+    <p>All payments must be made through our secure payment gateway. We do not store credit card details.</p>
+
+    <h3>5. Contact</h3>
+    <p>If you have any questions, contact us at <a href="maninandikolla1234@gmail.com">support@yourhotel.com</a>.</p>
+</div>
+{% endblock %}

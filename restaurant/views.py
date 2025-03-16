@@ -47,20 +47,24 @@ def order_food(request, food_id):
 
         total_price = food.price * quantity  # Calculate total price
 
+        # ✅ FIX: Ensure all fields are passed correctly
         order = Order.objects.create(
             user=request.user,
             food_item=food,
             quantity=quantity,
             total_price=total_price,
+            name=name,
+            phone=phone,
             location=location,
             hotel_name=hotel_name,
             hotel_location=hotel_location,
             room_number=room_number,
+            payment_option=payment_option,
             payment_status="Pending",
         )
 
         if payment_option == "online":
-            # Create Razorpay order
+            # ✅ FIX: Create Razorpay order and store the order ID
             razorpay_order = razorpay_client.order.create({
                 "amount": int(order.total_price * 100),
                 "currency": "INR",
@@ -78,13 +82,15 @@ def order_food(request, food_id):
             })
 
         else:  # Handle Cash on Delivery (COD)
-            order.payment_status = "COD"
+            order.payment_status = "COD"  # ✅ Fix this
             order.save()
             messages.success(request, "Your order has been placed successfully!")
             return redirect("order_success")  # Redirect for COD
 
     # Handle GET request properly
     return render(request, "restaurant/order_food.html", {"food": food})
+
+
 
 
 @csrf_exempt
@@ -163,6 +169,5 @@ def my_orders(request):
     """Displays the user's past orders."""
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'restaurant/my_orders.html', {'orders': orders})
-
 
 

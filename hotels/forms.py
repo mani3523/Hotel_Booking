@@ -9,3 +9,4 @@ class BookingForm(forms.ModelForm):
             'check_in': forms.DateInput(attrs={'type': 'date'}),
             'check_out': forms.DateInput(attrs={'type': 'date'}),
         }
+

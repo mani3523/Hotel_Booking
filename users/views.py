@@ -39,3 +39,7 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return render(request, 'users/logout.html')
+
+
+def terms_and_conditions(request):
+    return render(request, 'users/terms_and_conditions.html')

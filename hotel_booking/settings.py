@@ -189,3 +189,6 @@ ACCOUNT_EMAIL_VERIFICATION = "none"  # Optional, disable email verification
 ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_EMAIL_REQUIRED = True
+
+
+

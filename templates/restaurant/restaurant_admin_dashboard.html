@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Restaurant Admin Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Welcome, {{ request.user.username }}</h2>
+    <h3>Managing Restaurant: {{ restaurant.name }}</h3>
+    <p>Location: {{ restaurant.location }}</p>
+
+    <h3>Food Items</h3>
+    <table border="1">
+        <tr>
+            <th>Food Name</th>
+            <th>Price</th>
+            <th>Availability</th>
+        </tr>
+        {% for food in food_items %}
+        <tr>
+            <td>{{ food.name }}</td>
+            <td>₹{{ food.price }}</td>
+            <td>{{ food.is_available|yesno:"Available,Not Available" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No food items available.</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

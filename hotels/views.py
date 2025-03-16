@@ -136,7 +136,3 @@ def hotel_admin_dashboard(request, hotel_id):
 
     return render(request, 'hotels/hotel_admin_dashboard.html', {'hotel': hotel})
 
-
-
-def terms_and_conditions(request):
-    return render(request, 'hotels/terms_and_conditions.html')
