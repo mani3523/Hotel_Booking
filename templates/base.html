@@ -20,14 +20,22 @@
                 <li><a href="{% url 'home' %}" class="logo">Home</a></li>
                 <li><a href="{% url 'hotel_list' %}">Book Hotels</a></li>
                 <li><a href="{% url 'restaurant_list' %}">Order Food</a></li>
+                
                 {% if user.is_authenticated %}
-                <li><a href="{% url 'my_bookings' %}" style="text-decoration: none; color: #000000;">My Room Bookings</a></li>
+                    <li><a href="{% url 'my_bookings' %}" style="text-decoration: none; color: #000000;">My Room Bookings</a></li>
+                    <li><a href="{% url 'my_orders' %}" style="text-decoration: none; color: #000000;">My Food Bookings</a></li>
+                    
+                    {% if user.is_superuser or user.is_staff %}
+                    <li>
+                        <a href="{% url 'admin:index' %}" target="_blank" style="text-decoration: none; color: #000000; font-weight: bold;">
+                            Admin
+                        </a>
+                    </li>
+                    {% endif %}
                 {% endif %}
-                {% if user.is_authenticated %}
-                <li><a href="{% url 'my_orders' %}" style="text-decoration: none; color: #000000;">My Food Bookings</a></li>
-                {% endif %}
+            </ul>
         </div>
-        
+    
         <div class="nav-right">
             {% if request.user.is_authenticated %}
                 <h4>Welcome {{ user.username }}</h4>
@@ -36,7 +44,7 @@
                 <a href="{% url 'login' %}" class="auth-btn">Login</a>
             {% endif %}
         </div>
-    </nav>
+    </nav>    
      
     
     <main>

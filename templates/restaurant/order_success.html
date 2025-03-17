@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="success-container">
-    <img src="{% static 'images/success.png' %}" alt="Success" class="success-icon">
+    <img src="{% static 'images/order_success.gif' %}" alt="Success" class="success-icon" style="width: 100px; height: 100px; object-fit: contain;">
     <h2>🎉 Order Placed Successfully! 🎉</h2>
     <p>Thank you for your order. Your food is being prepared and will be delivered soon.</p>
     <a href="{% url 'restaurant_list' %}" class="btn btn-primary">Go Back to Restaurants</a>

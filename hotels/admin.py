@@ -41,6 +41,7 @@ class HotelAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return True
         return obj is not None and obj.owner == request.user
+    
 
     def has_delete_permission(self, request, obj=None):
         """Allow deleting only assigned hotel."""
