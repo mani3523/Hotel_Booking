@@ -7,53 +7,6 @@ body {
     color: #333;
 }
 
-/* Navbar Styling */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #ed512a;
-}
-
-/* Left Side Styling */
-.nav-left {
-    display: flex;
-    align-items: center;
-}
-
-/* Logo Styling */
-.logo-img {
-    width: 80px;
-    height: auto;
-    margin-right: 15px;
-}
-
-/* Navigation Links */
-.nav-left ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-}
-
-.nav-left ul li {
-    margin-right: 15px;
-}
-
-.nav-left ul li a {
-    text-decoration: none;
-    color: #000000;
-    font-weight: bold;
-}
-
-/* Right Side Styling */
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
 /* Auth Buttons */
 .auth-btn {
     text-decoration: none;

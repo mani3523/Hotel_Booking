@@ -9,6 +9,91 @@
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     {% block extra_css %}{% endblock %}
+
+    <style>
+        /* Basic Navbar Styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fc2303;
+            padding: 15px 20px;
+            position: relative;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            width: 50px;
+            margin-right: 10px;
+        }
+
+        .nav-left ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-left ul li {
+            display: inline;
+        }
+
+        .nav-left ul li a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Hamburger Menu */
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+            background: #fc2303;
+            border: none;
+            padding: 10px;
+        }
+
+        /* Mobile Responsive Navbar */
+        @media (max-width: 768px) {
+            .nav-left ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                padding: 10px 0;
+                text-align: center;
+                transition: max-height 0.3s ease-in-out;
+            }
+
+            .nav-left ul.active {
+                display: flex;
+            }
+
+            .nav-left ul li {
+                padding: 10px 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -16,26 +101,25 @@
             <a href="{% url 'home' %}">
                 <img src="{% static 'images/favicon.png' %}" alt="YoYo Hotels Logo" class="logo-img">
             </a>
-            <ul>
-                <li><a href="{% url 'home' %}" class="logo">Home</a></li>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i> <!-- Icon for Menu -->
+            </button>
+            <ul id="nav-menu">
+                <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'hotel_list' %}">Book Hotels</a></li>
                 <li><a href="{% url 'restaurant_list' %}">Order Food</a></li>
-                
+
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'my_bookings' %}" style="text-decoration: none; color: #000000;">My Room Bookings</a></li>
-                    <li><a href="{% url 'my_orders' %}" style="text-decoration: none; color: #000000;">My Food Bookings</a></li>
-                    
+                    <li><a href="{% url 'my_bookings' %}">My Room Bookings</a></li>
+                    <li><a href="{% url 'my_orders' %}">My Food Bookings</a></li>
+
                     {% if user.is_superuser or user.is_staff %}
-                    <li>
-                        <a href="{% url 'admin:index' %}" target="_blank" style="text-decoration: none; color: #000000; font-weight: bold;">
-                            Admin
-                        </a>
-                    </li>
+                    <li><a href="{% url 'admin:index' %}" target="_blank"><strong>Admin</strong></a></li>
                     {% endif %}
                 {% endif %}
             </ul>
         </div>
-    
+
         <div class="nav-right">
             {% if request.user.is_authenticated %}
                 <h4>Welcome {{ user.username }}</h4>
@@ -44,16 +128,33 @@
                 <a href="{% url 'login' %}" class="auth-btn">Login</a>
             {% endif %}
         </div>
-    </nav>    
-     
-    
+    </nav>
+
     <main>
         {% block content %}{% endblock %}
     </main>
     <footer>
         <p>&copy; {% now "DATE_FORMAT" %} YoYo Booking. All rights reserved.</p>
-        
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.getElementById("menuToggle");
+            const navMenu = document.getElementById("nav-menu");
+
+            menuToggle.addEventListener("click", function () {
+                navMenu.classList.toggle("active");
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener("click", function (event) {
+                if (!menuToggle.contains(event.target) && !navMenu.contains(event.target)) {
+                    navMenu.classList.remove("active");
+                }
+            });
+        });
+    </script>
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>
