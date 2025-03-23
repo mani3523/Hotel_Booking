@@ -1,6 +1,6 @@
 🏨 Hotel & Food Booking Web App
 
-This is a Django-based web application that allows users to book hotel rooms and order food online. The platform features a user-friendly interface, authentication system, and an admin panel for managing bookings and orders.
+This Django-based web application allows users to book hotel rooms and order food online. The platform features a user-friendly interface, an authentication system, and an admin panel for managing bookings and orders.
 
 🚀 Features
 User Features
